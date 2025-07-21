@@ -25,7 +25,7 @@ public class QuestionController {
 	@Autowired
 	private IQuestionService  questionService;
 	
-	@PostMapping("/save-all-question")
+	@PostMapping("/save-all")
 	public ResponseEntity<HttpResponseDTO<List<QuestionDTO>>> insertAllQuestions(@RequestBody List<QuestionDTO> questionDTOs){
 		
 		for(QuestionDTO questions:questionDTOs) {
