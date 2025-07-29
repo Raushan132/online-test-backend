@@ -31,14 +31,16 @@ public class QuestionServiceImpl implements IQuestionService {
 	@Override
 	public List<QuestionOptionDTO> getAllQuestionEntityById(Integer testSeriesId) {
 	    List<QuestionsEntity> all = questionRepo.findAllByTestSeries_TestSeriesId(testSeriesId);
-	    List<QuestionOptionDTO> dto = new ArrayList<>();
+	    List<QuestionOptionDTO> dtoList = new ArrayList<>();
 	    all.forEach(data -> {
 	        QuestionOptionDTO mappedDto = modelMapper.map(data, QuestionOptionDTO.class);
-	        dto.add(mappedDto);
+	        dtoList.add(mappedDto);
 	    });
 
-	    return dto;
+	    return dtoList;
 	}
+	
+	
 
 	
 	

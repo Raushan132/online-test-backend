@@ -11,6 +11,8 @@ public interface IQuestionService {
 	
 	public abstract List<QuestionOptionDTO> getAllQuestionEntityById(Integer testSeriesId);
 	
+	
+	
 
 
 }

@@ -39,7 +39,6 @@ public class QuestionsEntity {
 	@JoinColumn(name = "test_series_id")
 	private TestSeriesEntity testSeries;
 	
-
 	
 
 }

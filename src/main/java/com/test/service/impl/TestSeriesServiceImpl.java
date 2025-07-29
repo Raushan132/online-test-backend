@@ -1,7 +1,9 @@
 package com.test.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	private TestSeriesRepository testSeriesRepo;
 	
 	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId) {
@@ -32,11 +36,16 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	}
 
 	@Override
-	public List<TestSeriesEntity> getAllTestSeriesByCategory(String testCategory) {
+	public List<TestSeriesDTO> getAllTestSeriesByCategory(String testCategory) {
 		testCategory.toLowerCase();
 		List<TestSeriesEntity> entity = testSeriesRepo.findTestSeriesIdByCategory(testCategory);
-			
-		return entity;
+			System.err.print(entity);
+		
+		List<TestSeriesDTO> dtoList = entity.stream()
+		.map(data->modelMapper.map(data, TestSeriesDTO.class))
+		.collect(Collectors.toList());
+		
+		return dtoList;
 	}
 	
 	

@@ -31,8 +31,8 @@ public class TestSeriesController {
 	}
 	
 	@GetMapping("/series/category/{category}")
-	public ResponseEntity<HttpResponseDTO<List<TestSeriesEntity>>> getAllTestSeriesByCategory(@PathVariable("category")String category){
-		List<TestSeriesEntity> allTestSeriesByCategory = iTestSeriesService.getAllTestSeriesByCategory(category);
+	public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeriesByCategory(@PathVariable("category")String category){
+		List<TestSeriesDTO> allTestSeriesByCategory = iTestSeriesService.getAllTestSeriesByCategory(category);
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.ACCEPTED,"fetched by Category successfully",allTestSeriesByCategory));
 	}
 	
