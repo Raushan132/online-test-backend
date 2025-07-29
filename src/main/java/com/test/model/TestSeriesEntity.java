@@ -38,7 +38,7 @@ public class TestSeriesEntity {
 	@OneToMany(mappedBy = "testSeries",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<TestAttemptEntity> attempts;
 	
-	@OneToMany(mappedBy = "testSeries",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "testSeries",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<QuestionsEntity> questions;
 
 }

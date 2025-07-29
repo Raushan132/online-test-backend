@@ -3,9 +3,18 @@ package com.test.service;
 import java.util.List;
 
 import com.test.dto.QuestionOptionDTO;
+import com.test.dto.TestSeriesDTO;
+import com.test.model.TestSeriesEntity;
 
 public interface ITestSeriesService {
 	
-	public List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId);
+	public abstract List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId);
+	
+	public abstract List<TestSeriesEntity> getAllTestSeriesByCategory(String testCategory);
+	
+	
+	
+	
+	
 
 }

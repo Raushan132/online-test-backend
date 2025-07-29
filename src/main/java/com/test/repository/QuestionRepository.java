@@ -10,6 +10,7 @@ public interface QuestionRepository extends JpaRepository<QuestionsEntity, Integ
 	
 	
 	List<QuestionsEntity> findAllByTestSeries_TestSeriesId(Integer testSeriesId);
+	
 
 
 

@@ -7,10 +7,9 @@ import com.test.dto.QuestionOptionDTO;
 
 public interface IQuestionService {
 	
-	String saveQuestion(QuestionDTO questionDto);
+	public abstract String saveQuestion(QuestionDTO questionDto);
 	
-	List<QuestionOptionDTO> getAllQuestionEntityById(Integer testSeriesId);
-	
+	public abstract List<QuestionOptionDTO> getAllQuestionEntityById(Integer testSeriesId);
 	
 
 

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.test.dto.HttpResponseDTO;
 import com.test.dto.QuestionOptionDTO;
+import com.test.dto.TestSeriesDTO;
+import com.test.model.TestSeriesEntity;
 import com.test.service.ITestSeriesService;
 
 @RestController
@@ -27,5 +29,14 @@ public class TestSeriesController {
 		List<QuestionOptionDTO> allTestSeries = iTestSeriesService.getAllTestSeries(testSeriesId);
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK,"feteched successfully",allTestSeries));
 	}
+	
+	@GetMapping("/series/category/{category}")
+	public ResponseEntity<HttpResponseDTO<List<TestSeriesEntity>>> getAllTestSeriesByCategory(@PathVariable("category")String category){
+		List<TestSeriesEntity> allTestSeriesByCategory = iTestSeriesService.getAllTestSeriesByCategory(category);
+		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.ACCEPTED,"fetched by Category successfully",allTestSeriesByCategory));
+	}
+	
+	
+	
 
 }
