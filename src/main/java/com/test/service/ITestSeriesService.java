@@ -12,5 +12,9 @@ public interface ITestSeriesService {
 	public abstract List<TestSeriesDTO> getAllTestSeriesByCategory(String testCategory);
 
 	public List<TestSeriesDTO> getAllTestSeries();
+	
+
+	
+	
 
 }

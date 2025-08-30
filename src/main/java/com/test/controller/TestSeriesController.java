@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.dto.HttpResponseDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
-import com.test.model.TestSeriesEntity;
 import com.test.service.ITestSeriesService;
 
 @RestController
@@ -46,6 +45,8 @@ public class TestSeriesController {
         List<TestSeriesDTO> seriesList = iTestSeriesService.getAllTestSeries();
         return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All test series fetched successfully", seriesList));
     }
+	
+	
 	
 	
 	

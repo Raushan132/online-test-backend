@@ -29,8 +29,10 @@ public class QuestionServiceImpl implements IQuestionService {
 		questionRepo.save(entity);
 		return "saved";
 	}
+	
+	
 	@Override
-	public List<QuestionOptionDTO> getAllQuestionEntityById(Integer testSeriesId) {
+	public List<QuestionOptionDTO> getAllQuestionDTOById(Integer testSeriesId) {
 	    List<QuestionsEntity> all = questionRepo.findAllByTestSeries_TestSeriesId(testSeriesId);
 	    List<QuestionOptionDTO> dtoList = new ArrayList<>();
 	    all.forEach(data -> {
@@ -40,6 +42,15 @@ public class QuestionServiceImpl implements IQuestionService {
 
 	    return dtoList;
 	}
+	
+	@Override
+	public List<QuestionsEntity> getAllQuestionEntityById(Integer testSeriesId) {
+		return  questionRepo.findAllByTestSeries_TestSeriesId(testSeriesId);
+		
+		
+	}
+	
+	
 	
 	
 	
