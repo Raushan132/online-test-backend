@@ -1,7 +1,12 @@
 package com.test.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,8 +22,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserEntity {
+public class UserEntity implements UserDetails {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7809729904739420592L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
@@ -31,6 +40,18 @@ public class UserEntity {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<PaymentEntity> payments;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		  return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
+	}
 	
 	
 
