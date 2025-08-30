@@ -32,7 +32,7 @@ public class QuestionController {
 			questionService.saveQuestion(questions);
 		}
 		return ResponseEntity
-				.ok(new HttpResponseDTO<>(HttpStatus.ACCEPTED, "All Questions saved successfully", questionDTOs));
+				.ok(  HttpResponseDTO.of(HttpStatus.ACCEPTED, "All Questions saved successfully", questionDTOs));
 	}
 
 	@GetMapping("/find-all/{testSeriesId}")
@@ -40,8 +40,8 @@ public class QuestionController {
 			@PathVariable("testSeriesId") Integer testSeriesId) {
 		
 		List<QuestionOptionDTO> dto = questionService.getAllQuestionEntityById(testSeriesId);
-		HttpResponseDTO<List<QuestionOptionDTO>> response = new HttpResponseDTO<>(HttpStatus.ACCEPTED,
-				"All Questions fetched successfully", dto);
+		HttpResponseDTO<List<QuestionOptionDTO>> response =   HttpResponseDTO.of(HttpStatus.ACCEPTED, "All Questions fetched successfully", dto);
+
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
