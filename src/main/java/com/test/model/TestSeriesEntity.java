@@ -27,6 +27,7 @@ public class TestSeriesEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer testSeriesId;
 	private String title;
+	private String imgUrl;
 	private String description;
 	private int totalQuestion;
 	private double totalMarks;

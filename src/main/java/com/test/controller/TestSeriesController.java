@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.test.service.ITestSeriesService;
 
 @RestController
 @RequestMapping("/test")
+@CrossOrigin
 public class TestSeriesController {
 	
 	
@@ -30,11 +32,20 @@ public class TestSeriesController {
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK,"feteched successfully",allTestSeries));
 	}
 	
+	
+	
 	@GetMapping("/series/category/{category}")
 	public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeriesByCategory(@PathVariable("category")String category){
 		List<TestSeriesDTO> allTestSeriesByCategory = iTestSeriesService.getAllTestSeriesByCategory(category);
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.ACCEPTED,"fetched by Category successfully",allTestSeriesByCategory));
 	}
+	
+	
+	@GetMapping("/all")
+    public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeries() {
+        List<TestSeriesDTO> seriesList = iTestSeriesService.getAllTestSeries();
+        return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All test series fetched successfully", seriesList));
+    }
 	
 	
 	

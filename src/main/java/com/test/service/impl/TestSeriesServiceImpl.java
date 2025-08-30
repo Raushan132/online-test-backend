@@ -22,8 +22,7 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 
 	@Autowired
 	private TestSeriesRepository testSeriesRepo;
-	
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -39,15 +38,20 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	public List<TestSeriesDTO> getAllTestSeriesByCategory(String testCategory) {
 		testCategory.toLowerCase();
 		List<TestSeriesEntity> entity = testSeriesRepo.findTestSeriesIdByCategory(testCategory);
-			System.err.print(entity);
-		
-		List<TestSeriesDTO> dtoList = entity.stream()
-		.map(data->modelMapper.map(data, TestSeriesDTO.class))
-		.collect(Collectors.toList());
-		
+		System.err.print(entity);
+
+		List<TestSeriesDTO> dtoList = entity.stream().map(data -> modelMapper.map(data, TestSeriesDTO.class))
+				.collect(Collectors.toList());
+
 		return dtoList;
 	}
-	
-	
+
+	@Override
+	public List<TestSeriesDTO> getAllTestSeries() {
+		List<TestSeriesEntity> entity = testSeriesRepo.findAll();
+		System.err.println(entity);
+		return entity.stream().map(data -> modelMapper.map(data, TestSeriesDTO.class)).collect(Collectors.toList());
+		
+	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.test.dto.QuestionDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.model.QuestionsEntity;
+import com.test.model.TestSeriesEntity;
 import com.test.repository.QuestionRepository;
 import com.test.service.IQuestionService;
 
@@ -39,6 +40,9 @@ public class QuestionServiceImpl implements IQuestionService {
 
 	    return dtoList;
 	}
+	
+	
+	
 	
 	
 
