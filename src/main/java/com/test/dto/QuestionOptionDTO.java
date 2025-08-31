@@ -8,6 +8,7 @@ public class QuestionOptionDTO {
 
 	@Column(length = 1000)
 	private String questionTxt;
+	private Integer questionId;
 	private String optionA;
 	private String optionB;
 	private String optionC;
