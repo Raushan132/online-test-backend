@@ -9,6 +9,7 @@ import com.test.model.UserEntity;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
