@@ -8,11 +8,11 @@ import com.test.model.QuestionsEntity;
 
 public interface IQuestionService {
 	
-	public abstract String saveQuestion(QuestionDTO questionDto);
+     String saveQuestion(QuestionDTO questionDto);
 	
-	public abstract List<QuestionOptionDTO> getAllQuestionDTOById(Integer testSeriesId);
+     List<QuestionOptionDTO> getAllQuestionDTOById(Integer testSeriesId);
 	
-	public abstract List<QuestionsEntity> getAllQuestionEntityById(Integer testSeriesId);
+	 List<QuestionsEntity> getAllQuestionEntityById(Integer testSeriesId);
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.test.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -12,5 +14,6 @@ public class ResultDTO {
     private Integer correct;
     private Integer incorrect;
     private Integer unattempted;
-    private Double accuracy;        
+    private Double accuracy;
+    private List<SolutionDTO> solution;
 }
