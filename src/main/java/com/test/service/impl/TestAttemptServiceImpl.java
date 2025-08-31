@@ -1,14 +1,17 @@
 package com.test.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.dto.AnswerRequestDTO;
 import com.test.dto.ResultDTO;
+import com.test.dto.SolutionDTO;
 import com.test.model.QuestionsEntity;
 import com.test.model.TestAttemptEntity;
 import com.test.model.TestSeriesEntity;
@@ -33,6 +36,9 @@ public class TestAttemptServiceImpl implements ITestAttemptService {
 	
 	@Autowired
 	private IQuestionService iQuestionService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	
 	@Override
@@ -97,6 +103,18 @@ public class TestAttemptServiceImpl implements ITestAttemptService {
 	resultDTO.setAccuracy(accuracy);
 	resultDTO.setRank(0);
 	resultDTO.setPercentile(0.0);
+	List<SolutionDTO> solutions = new LinkedList<>();
+	Map<Integer,String> selectedOptions=	answerRqstDTO.stream()
+			.collect(Collectors.toMap(AnswerRequestDTO::getQuestionId, AnswerRequestDTO::getSelectedOptions));
+	for(QuestionsEntity entity: entityById) {
+		SolutionDTO  sol = new SolutionDTO();
+		modelMapper.map(entity, sol);
+		sol.setChoosenOption(selectedOptions.get(entity.getQuestionId()));
+		solutions.add(sol);
+		
+	}
+	
+	resultDTO.setSolution(solutions);		
 
 		return resultDTO;
 	}
