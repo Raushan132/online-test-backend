@@ -7,14 +7,14 @@ import com.test.dto.TestSeriesDTO;
 
 public interface ITestSeriesService {
 
-	public abstract List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId);
+	List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId);
 
-	public abstract List<TestSeriesDTO> getAllTestSeriesByCategory(String testCategory);
+	List<TestSeriesDTO> getAllTestSeriesByCategory(String testCategory);
 
 	public List<TestSeriesDTO> getAllTestSeries();
-	
 
-	
-	
+	List<String> getAllCategories();
+
+	String saveTestSeries(TestSeriesDTO dto);
 
 }

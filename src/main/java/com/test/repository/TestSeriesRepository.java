@@ -12,5 +12,12 @@ public interface TestSeriesRepository extends JpaRepository<TestSeriesEntity, In
 
 	@Query("SELECT t FROM TestSeriesEntity t WHERE t.category =:category")
 	List<TestSeriesEntity> findTestSeriesIdByCategory(@Param("category") String category);
+	
+	@Query("SELECT DISTINCT t.category FROM TestSeriesEntity t")
+	 List<String>   findAllCategories();
+	
+	
+	
+	
 
 }

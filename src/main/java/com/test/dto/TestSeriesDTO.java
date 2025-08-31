@@ -7,9 +7,6 @@ import java.util.List;
 import com.test.model.QuestionsEntity;
 import com.test.model.TestAttemptEntity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
@@ -20,7 +17,7 @@ public class TestSeriesDTO {
 	private String description;
 	private int totalQuestion;
 	private double totalMarks;
-	private Duration duration;
+	private Integer duration;
 	private String category;
 	private double price;
 	private LocalDate createAt;

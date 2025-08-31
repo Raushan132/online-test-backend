@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,39 +17,49 @@ import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
 import com.test.service.ITestSeriesService;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
 @RestController
 @RequestMapping("/test")
 @CrossOrigin
 public class TestSeriesController {
-	
-	
+
 	@Autowired
 	private ITestSeriesService iTestSeriesService;
-	
+
 	@GetMapping("/series/{test-series-id}")
-	public ResponseEntity<HttpResponseDTO<List<QuestionOptionDTO>>> getAllTestSeries(@PathVariable("test-series-id") Integer testSeriesId){
+	public ResponseEntity<HttpResponseDTO<List<QuestionOptionDTO>>> getAllTestSeries(
+			@PathVariable("test-series-id") Integer testSeriesId) {
 		List<QuestionOptionDTO> allTestSeries = iTestSeriesService.getAllTestSeries(testSeriesId);
-		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK,"feteched successfully",allTestSeries));
+		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "feteched successfully", allTestSeries));
 	}
-	
-	
-	
+
 	@GetMapping("/series/category/{category}")
-	public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeriesByCategory(@PathVariable("category")String category){
+	public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeriesByCategory(
+			@PathVariable("category") String category) {
 		List<TestSeriesDTO> allTestSeriesByCategory = iTestSeriesService.getAllTestSeriesByCategory(category);
-		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.ACCEPTED,"fetched by Category successfully",allTestSeriesByCategory));
+		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.ACCEPTED, "fetched by Category successfully",
+				allTestSeriesByCategory));
 	}
-	
-	
+
 	@GetMapping("/all")
-    public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeries() {
-        List<TestSeriesDTO> seriesList = iTestSeriesService.getAllTestSeries();
-        return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All test series fetched successfully", seriesList));
-    }
-	
-	
-	
-	
-	
+	public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeries() {
+		List<TestSeriesDTO> seriesList = iTestSeriesService.getAllTestSeries();
+		return ResponseEntity
+				.ok(new HttpResponseDTO<>(HttpStatus.OK, "All test series fetched successfully", seriesList));
+	}
+
+	@GetMapping("/series/categories")
+	public ResponseEntity<HttpResponseDTO<List<String>>> getCategories() {
+		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All categories fetched successfully",
+				iTestSeriesService.getAllCategories()));
+
+	}
+
+	@PostMapping("/series/test-saved")
+	public ResponseEntity<HttpResponseDTO<String>> create(@RequestBody TestSeriesDTO dto) {
+		 iTestSeriesService.saveTestSeries(dto);
+		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All categories saved successfully", null));
+	}
 
 }

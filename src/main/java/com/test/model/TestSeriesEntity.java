@@ -31,7 +31,7 @@ public class TestSeriesEntity {
 	private String description;
 	private int totalQuestion;
 	private double totalMarks;
-	private Duration duration;
+	private Integer duration;
 	private String category;
 	private double price;
 	private LocalDate createAt;

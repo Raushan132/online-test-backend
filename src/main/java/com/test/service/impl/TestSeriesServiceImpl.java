@@ -1,5 +1,7 @@
 package com.test.service.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,23 +26,23 @@ import com.test.service.ITestSeriesService;
 @Service
 public class TestSeriesServiceImpl implements ITestSeriesService {
 
-    private final QuestionRepository questionRepository;
+	private final QuestionRepository questionRepository;
 
 	@Autowired
 	private IQuestionService iQuestionService;
 
 	@Autowired
 	private TestSeriesRepository testSeriesRepo;
-	
+
 	@Autowired
 	private TestAttemptRepository attemptRepository;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
-    TestSeriesServiceImpl(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
+	TestSeriesServiceImpl(QuestionRepository questionRepository) {
+		this.questionRepository = questionRepository;
+	}
 
 	@Override
 	public List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId) {
@@ -67,11 +69,27 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 		List<TestSeriesEntity> entity = testSeriesRepo.findAll();
 		System.err.println(entity);
 		return entity.stream().map(data -> modelMapper.map(data, TestSeriesDTO.class)).collect(Collectors.toList());
-		
+
 	}
-	
-	
-	
-	
+
+	@Override
+	public List<String> getAllCategories() {
+		return testSeriesRepo.findAll().stream().map(TestSeriesEntity::getCategory) // extract category
+				.distinct() // remove duplicates
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public String saveTestSeries(TestSeriesDTO dto) {
+		TestSeriesEntity entity = new TestSeriesEntity();
+		entity.setCategory(dto.getCategory());
+		entity.setCreateAt(LocalDate.now());
+		entity.setDescription(dto.getDescription());
+		entity.setDuration(dto.getDuration());
+		entity.setPrice(dto.getPrice());
+		entity.setTitle(dto.getTitle());
+		testSeriesRepo.save(entity);
+		return "saved";
+	}
 
 }
