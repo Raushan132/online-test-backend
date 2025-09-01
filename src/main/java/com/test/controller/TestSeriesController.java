@@ -1,6 +1,7 @@
 package com.test.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.dto.HttpResponseDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
+import com.test.dto.TestSeriesTitlesDTO;
 import com.test.service.ITestSeriesService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +56,11 @@ public class TestSeriesController {
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All categories fetched successfully",
 				iTestSeriesService.getAllCategories()));
 
+	}
+	
+	@GetMapping("/series/testSeriesTitles")
+	public ResponseEntity<HttpResponseDTO<List<TestSeriesTitlesDTO>>> getAllTestSeriesTitles(){
+		return ResponseEntity.ok(new HttpResponseDTO(HttpStatus.OK,"All Test series id and title fetched",iTestSeriesService.getAllTestSeriesId()));
 	}
 
 	@PostMapping("/series/test-saved")

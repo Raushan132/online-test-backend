@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.dto.HttpResponseDTO;
 import com.test.dto.QuestionDTO;
 import com.test.dto.QuestionOptionDTO;
+import com.test.model.TestSeriesEntity;
 import com.test.service.IQuestionService;
+import com.test.service.ITestSeriesService;
 
 @RestController
 @RequestMapping("/question")
@@ -25,14 +27,17 @@ public class QuestionController {
 
 	@Autowired
 	private IQuestionService questionService;
+	@Autowired
+	private ITestSeriesService testSeriesService;
 
-	@PostMapping("/save-all")
+	@PostMapping("/save-all/{testSeriesId}")
 	public ResponseEntity<HttpResponseDTO<List<QuestionDTO>>> insertAllQuestions(
+			@PathVariable Integer testSeriesId,
 			@RequestBody List<QuestionDTO> questionDTOs) {
 
-		for (QuestionDTO questions : questionDTOs) {
-			questionService.saveQuestion(questions);
-		}
+			TestSeriesEntity testSeriesEntity = testSeriesService.getTestSeriesEntity(testSeriesId);
+			questionService.saveQuestion(questionDTOs,testSeriesEntity);
+		
 		return ResponseEntity
 				.ok(  HttpResponseDTO.of(HttpStatus.ACCEPTED, "All Questions saved successfully", questionDTOs));
 	}

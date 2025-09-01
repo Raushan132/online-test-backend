@@ -3,6 +3,7 @@ package com.test.service.impl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import com.test.dto.QuestionDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.ResultDTO;
 import com.test.dto.TestSeriesDTO;
+import com.test.dto.TestSeriesTitlesDTO;
 import com.test.model.AnswerEntity;
 import com.test.model.QuestionsEntity;
 import com.test.model.TestAttemptEntity;
@@ -91,6 +93,20 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 		entity.setTitle(dto.getTitle());
 		testSeriesRepo.save(entity);
 		return "saved";
+	}
+
+	@Override
+	public List<TestSeriesTitlesDTO> getAllTestSeriesId() {
+		// TODO Auto-generated method stub
+		List<TestSeriesEntity> entities = testSeriesRepo.findAll();
+		
+		return entities.stream().map(entity->new TestSeriesTitlesDTO(entity.getTestSeriesId(), entity.getTitle())).toList();
+	}
+
+	@Override
+	public TestSeriesEntity getTestSeriesEntity(Integer TestSeriesId) {
+		// TODO Auto-generated method stub
+		return testSeriesRepo.findById(TestSeriesId).get();
 	}
 	
 	
