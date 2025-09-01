@@ -24,9 +24,13 @@ public class QuestionServiceImpl implements IQuestionService {
 	private QuestionRepository questionRepo;
 
 	@Override
-	public String saveQuestion(QuestionDTO questionDto) {
-		QuestionsEntity entity = modelMapper.map(questionDto, QuestionsEntity.class);
-		questionRepo.save(entity);
+	public String saveQuestion(List<QuestionDTO> questionDTOs,TestSeriesEntity testSeriesEntity) {
+		
+		for (QuestionDTO questions : questionDTOs) {
+			QuestionsEntity entity = modelMapper.map(questions, QuestionsEntity.class);
+			entity.setTestSeries(testSeriesEntity);
+			questionRepo.save(entity);
+		}
 		return "saved";
 	}
 	
