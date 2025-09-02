@@ -70,6 +70,15 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	@Override
 	public List<TestSeriesDTO> getAllTestSeries() {
 		List<TestSeriesEntity> entity = testSeriesRepo.findAll();
+		entity.stream().forEach(data->{
+			List<QuestionOptionDTO> questionsInfo = getAllTestSeries(data.getTestSeriesId());
+			double totalMarks = questionsInfo.stream().mapToDouble(QuestionOptionDTO::getMarks).sum();
+			if(data.getTotalQuestion()!= questionsInfo.size()) {
+				data.setTotalQuestion(questionsInfo.size());
+				data.setTotalMarks(totalMarks);				
+				testSeriesRepo.save(data);
+			}
+		});
 		System.err.println(entity);
 		return entity.stream().map(data -> modelMapper.map(data, TestSeriesDTO.class)).collect(Collectors.toList());
 
