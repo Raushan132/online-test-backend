@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.test.email.CustomMsg;
 import com.test.email.service.IEmailService;
 import com.test.model.UserEntity;
+import com.test.model.UserIdAndTokenEntity;
+import com.test.repository.UserIdAndTokenRepository;
 import com.test.repository.UserRepository;
 import com.test.service.IUserService;
 
@@ -18,11 +20,16 @@ import com.test.service.IUserService;
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
+	private UserIdAndTokenRepository userIdToken;
+	
+	@Autowired
 	private IEmailService emailService;
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	
 
 	@Override
 	public void saveUser(UserEntity userEntity) {
@@ -35,14 +42,35 @@ public class UserServiceImpl implements IUserService {
 		userEntity.setRegisteredAt(LocalDate.now());
 		userEntity.setRole("USER");
 		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-
-		userRepo.save(userEntity);
-
 		// UNIQUE TOKENS
 		String token = UUID.randomUUID().toString();
-
+		
+		userRepo.save(userEntity);
+		
+		UserIdAndTokenEntity idTokenEntity = new UserIdAndTokenEntity();
+		idTokenEntity.setUserId(userEntity.getUserId());
+		idTokenEntity.setToken(token);
+		userIdToken.save(idTokenEntity);
 		//  Send verification email with subject + token
-		emailService.emailSend(userEntity.getEmail(), CustomMsg.subject, token);
+		emailService.emailSend(userEntity.getEmail(), CustomMsg.subject, token,userEntity.getUserId());
+
+	}
+	
+	
+	
+	@Override
+	public boolean userVerification(String token, Integer id) {
+		Optional<UserIdAndTokenEntity> byId = userIdToken.findByUserId(id);
+		if(byId.isPresent()) {
+			Optional<UserEntity> userEntity = userRepo.findById(id);
+			UserEntity entity = userEntity.get();
+			entity.setActive(true);
+			userRepo.save(entity);
+			return true;
+		}
+		else {
+			return false;
+		}
 
 	}
 

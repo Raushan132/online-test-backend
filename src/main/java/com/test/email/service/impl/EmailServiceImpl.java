@@ -19,7 +19,7 @@ public class EmailServiceImpl implements IEmailService {
     private JavaMailSender sender;
 
     @Override
-    public boolean emailSend(String receiver, String subject, String token) {
+    public boolean emailSend(String receiver, String subject, String token,Integer id) {
         boolean isSend = false;
 
         try {
@@ -31,7 +31,7 @@ public class EmailServiceImpl implements IEmailService {
             helper.setSubject(subject);
             
             // Generate HTML email body with token
-            String body = CustomMsg.emailBody(token);
+            String body = CustomMsg.emailBody(token,id);
             helper.setText(body, true); // true => HTML content
 
             // Send mail

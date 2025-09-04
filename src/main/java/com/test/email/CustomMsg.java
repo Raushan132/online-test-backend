@@ -1,10 +1,9 @@
 package com.test.email;
 
 public class CustomMsg {
-
     public static final String subject = "Verify Your Email Address";
 
-    public static String emailBody(String token) {
+    public static String emailBody(String token, Integer id) {
         String message =
                 "<html>" +
                 "  <body>" +
@@ -13,11 +12,10 @@ public class CustomMsg {
                 "      ensuring secure access and protection from unauthorized use." +
                 "    </p>" +
                 "    <p>" +
-                "      <a href='http://localhost:8080/verify?token=" + token + "'>Verify Account</a>" +
+                "      <a href='http://localhost:8080/auth/verify?token=" + token + "&id=" + id + "'>Verify Account</a>" +
                 "    </p>" +
                 "  </body>" +
                 "</html>";
         return message;
     }
-
 }
