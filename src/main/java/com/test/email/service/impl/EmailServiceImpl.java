@@ -17,11 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 public class EmailServiceImpl implements IEmailService {
 
 	@Value("${spring.mail.username}")
-	private static String email;
+	private  String email;
 	
 	
 	@Autowired
 	private JavaMailSender sender;
+
+
+    @Value("${backend-baseUrl}")
+    private  String baseUrl;
 
 	@Override
 	public boolean emailSend(String receiver, String subject, String token, Integer id) {
@@ -35,9 +39,10 @@ public class EmailServiceImpl implements IEmailService {
 			helper.setTo(receiver);
 			helper.setSubject(subject);
 
-			// Generate HTML email body with token
-			String body = CustomMsg.emailBody(token, id);
-			helper.setText(body, true); // true => HTML content
+            
+            // Generate HTML email body with token
+            String body = CustomMsg.emailBody(token,id,baseUrl);
+            helper.setText(body, true); // true => HTML content
 
 			// Send mail
 			sender.send(mimeMsg);
