@@ -1,9 +1,13 @@
 package com.test.email;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class CustomMsg {
     public static final String subject = "Verify Your Email Address";
 
-    public static String emailBody(String token, Integer id) {
+
+
+    public static String emailBody(String token, Integer id,String baseUrl) {
         String message =
                 "<html>" +
                 "  <body>" +
@@ -12,7 +16,7 @@ public class CustomMsg {
                 "      ensuring secure access and protection from unauthorized use." +
                 "    </p>" +
                 "    <p>" +
-                "      <a href='http://localhost:8080/auth/verify?token=" + token + "&id=" + id + "'>Verify Account</a>" +
+                "      <a href='"+baseUrl+"/auth/verify?token=" + token + "&id=" + id + "'>Verify Account</a>" +
                 "    </p>" +
                 "  </body>" +
                 "</html>";

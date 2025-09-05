@@ -1,6 +1,7 @@
 package com.test.email.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class EmailServiceImpl implements IEmailService {
 
     @Autowired
     private JavaMailSender sender;
+    @Value("${spring.mail.username}")
+    private String emailName;
+
+    @Value("${backend-baseUrl}")
+    private static String baseUrl;
 
     @Override
     public boolean emailSend(String receiver, String subject, String token,Integer id) {
@@ -26,12 +32,12 @@ public class EmailServiceImpl implements IEmailService {
             MimeMessage mimeMsg = sender.createMimeMessage();
 
             MimeMessageHelper helper = new MimeMessageHelper(mimeMsg, true);
-            helper.setFrom("indiafreeinternship@gmail.com"); // your sender email
+            helper.setFrom(emailName); // your sender email
             helper.setTo(receiver);
             helper.setSubject(subject);
             
             // Generate HTML email body with token
-            String body = CustomMsg.emailBody(token,id);
+            String body = CustomMsg.emailBody(token,id,baseUrl);
             helper.setText(body, true); // true => HTML content
 
             // Send mail
