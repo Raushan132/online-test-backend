@@ -38,6 +38,7 @@ public class UserEntity implements UserDetails {
 	private LocalDate registeredAt;
 	private boolean isActive;
 	
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<PaymentEntity> payments;
 
