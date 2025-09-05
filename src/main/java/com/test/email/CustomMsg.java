@@ -1,8 +1,15 @@
 package com.test.email;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class CustomMsg {
     public static final String subject = "Verify Your Email Address";
-
+    
+  
+    
+    
     public static String emailBody(String token, Integer id) {
         String message =
                 "<html>" +
