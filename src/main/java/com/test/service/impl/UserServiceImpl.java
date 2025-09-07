@@ -1,7 +1,9 @@
 package com.test.service.impl;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.test.email.CustomMsg;
 import com.test.email.service.IEmailService;
+import com.test.model.Role;
 import com.test.model.UserEntity;
 import com.test.model.UserIdAndTokenEntity;
 import com.test.repository.UserIdAndTokenRepository;
@@ -40,7 +43,13 @@ public class UserServiceImpl implements IUserService {
 
 		}
 		userEntity.setRegisteredAt(LocalDate.now());
-		userEntity.setRole("USER");
+		Set<Role> roles = new HashSet<>();
+		Role role= new Role();
+		role.setRoleName("USER");
+		roles.add(role);
+		
+		
+		userEntity.setRoles(roles);
 		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 		// UNIQUE TOKENS
 		String token = UUID.randomUUID().toString();
