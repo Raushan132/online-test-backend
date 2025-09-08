@@ -17,6 +17,7 @@ import com.test.dto.HttpResponseDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
 import com.test.dto.TestSeriesTitlesDTO;
+import com.test.model.CategoryEntity;
 import com.test.service.ITestSeriesService;
 
 @RestController
@@ -50,7 +51,7 @@ public class TestSeriesController {
 	}
 
 	@GetMapping("/series/categories")
-	public ResponseEntity<HttpResponseDTO<List<String>>> getCategories() {
+	public ResponseEntity<HttpResponseDTO<List<CategoryEntity>>> getCategories() {
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All categories fetched successfully",
 				iTestSeriesService.getAllCategories()));
 

@@ -5,6 +5,7 @@ import java.util.List;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
 import com.test.dto.TestSeriesTitlesDTO;
+import com.test.model.CategoryEntity;
 import com.test.model.TestSeriesEntity;
 
 public interface ITestSeriesService {
@@ -15,7 +16,7 @@ public interface ITestSeriesService {
 
 	List<TestSeriesDTO> getAllTestSeries();
 
-	List<String> getAllCategories();
+	List<CategoryEntity> getAllCategories();
 	List<TestSeriesTitlesDTO> getAllTestSeriesId();
 	String saveTestSeries(TestSeriesDTO dto);
 	TestSeriesEntity getTestSeriesEntity(Integer TestSeriesId);
