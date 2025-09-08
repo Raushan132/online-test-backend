@@ -17,6 +17,7 @@ import com.test.dto.ResultDTO;
 import com.test.dto.TestSeriesDTO;
 import com.test.dto.TestSeriesTitlesDTO;
 import com.test.model.AnswerEntity;
+import com.test.model.CategoryEntity;
 import com.test.model.QuestionsEntity;
 import com.test.model.TestAttemptEntity;
 import com.test.model.TestSeriesEntity;
@@ -85,7 +86,7 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	}
 
 	@Override
-	public List<String> getAllCategories() {
+	public List<CategoryEntity> getAllCategories() {
 		return testSeriesRepo.findAll().stream().map(TestSeriesEntity::getCategory) // extract category
 				.distinct() // remove duplicates
 				.collect(Collectors.toList());
@@ -94,7 +95,7 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	@Override
 	public String saveTestSeries(TestSeriesDTO dto) {
 		TestSeriesEntity entity = new TestSeriesEntity();
-		entity.setCategory(dto.getCategory());
+		//entity.setCategory(dto.getCategory());
 		entity.setCreateAt(LocalDate.now());
 		entity.setDescription(dto.getDescription());
 		entity.setDuration(dto.getDuration());

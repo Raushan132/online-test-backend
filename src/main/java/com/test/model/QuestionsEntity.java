@@ -29,7 +29,9 @@ public class QuestionsEntity {
 	private String optionC;
 	private String optionD;
 	private String optionE;
+	private String optionF;
 	private String correctOption;
+	private int noOfOptions;
 	private int marks;
 	@Column(length = 2000)
 	private String explanation;
