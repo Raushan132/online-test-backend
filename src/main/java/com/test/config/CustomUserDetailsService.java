@@ -18,11 +18,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepo.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        String[] roleNames = user.getRoles()
+                .stream()
+                .map(role -> role.getRoleName().toUpperCase())  // convert to "ADMIN", "USER"
+                .toArray(String[]::new);
 
         return User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword()) // must be encoded
-                .roles(user.getRole())
+                .roles(roleNames)
+                .disabled(!user.isActive())
                 .build();
     }
 }
