@@ -8,39 +8,33 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Data
-public class PaymentEntity {
+public class SubscriberEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer paymentId;
-	private double amount;
-	private String currency;
-	private String paymentMode;
-	private String transactionId;
-	private boolean paymentStatus;
-	private LocalDate paymentDate;
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
-	
+	private Integer subscriberId;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name="user_id")
 	private UserEntity user;
 	
 	@ManyToOne
 	@JoinColumn(name="plan_id")
 	private PlanEntity plan;
 	
-	@OneToOne(mappedBy = "payment")
-	private SubscriberEntity subscriber;  // Optional, reverse mapping
+	@OneToOne
+	@JoinColumn(name="payment_id")
+	private PaymentEntity payment;
 
 }
