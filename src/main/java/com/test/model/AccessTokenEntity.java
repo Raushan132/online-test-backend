@@ -20,6 +20,6 @@ public class AccessTokenEntity {
 
     // Optional back-reference if you want to navigate from token to test list
     @OneToOne(mappedBy = "accessToken")
-    private TestListEntity testList;
+    private PlayListEntity testList;
 }
 
