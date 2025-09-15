@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.dto.ClassificationDTO;
 import com.test.dto.HttpResponseDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
@@ -49,17 +50,24 @@ public class TestSeriesController {
 		return ResponseEntity
 				.ok(new HttpResponseDTO<>(HttpStatus.OK, "All test series fetched successfully", seriesList));
 	}
+	
+	@GetMapping("/all/{playListId}")
+	public ResponseEntity<HttpResponseDTO<List<TestSeriesDTO>>> getAllTestSeriesByPlaylistId(@PathVariable Integer playListId) {
+		List<TestSeriesDTO> seriesList = iTestSeriesService.getAllTestSeriesByPlaylistId(playListId);
+		return ResponseEntity
+				.ok(new HttpResponseDTO<>(HttpStatus.OK, "All test series fetched successfully", seriesList));
+	}
 
-	@GetMapping("/series/categories")
-	public ResponseEntity<HttpResponseDTO<List<CategoryEntity>>> getCategories() {
+	@GetMapping("/series/classification")
+	public ResponseEntity<HttpResponseDTO<ClassificationDTO>> getCategories() {
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All categories fetched successfully",
-				iTestSeriesService.getAllCategories()));
+				iTestSeriesService.getAllClassification()));
 
 	}
 	
-	@GetMapping("/series/testSeriesTitles")
-	public ResponseEntity<HttpResponseDTO<List<TestSeriesTitlesDTO>>> getAllTestSeriesTitles(){
-		return ResponseEntity.ok(new HttpResponseDTO(HttpStatus.OK,"All Test series id and title fetched",iTestSeriesService.getAllTestSeriesId()));
+	@GetMapping("/series/testSeriesTitles/{playListId}")
+	public ResponseEntity<HttpResponseDTO<List<TestSeriesTitlesDTO>>> getAllTestSeriesTitles(@PathVariable Integer playListId){
+		return ResponseEntity.ok(new HttpResponseDTO(HttpStatus.OK,"All Test series id and title fetched",iTestSeriesService.getAllTestSeriesId(playListId)));
 	}
 
 	@PostMapping("/series/test-saved")

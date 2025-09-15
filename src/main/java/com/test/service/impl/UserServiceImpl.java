@@ -83,4 +83,12 @@ public class UserServiceImpl implements IUserService {
 
 	}
 
+
+
+	@Override
+	public UserEntity getUserEntityByEmail(String email) {
+		
+		return userRepo.findByEmail(email).orElseThrow(()->new  RuntimeException("User Not found Exception") );
+	}
+
 }

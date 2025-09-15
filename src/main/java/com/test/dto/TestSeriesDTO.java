@@ -18,7 +18,10 @@ public class TestSeriesDTO {
 	private double totalMarks;
 	private Integer duration;
 	private String category;
+	private String subject;
+	private String topic;
 	private double price;
+	private Integer testListId;
 	private LocalDate createAt;
 	private List<TestAttemptEntity> attempts;
 	private List<QuestionsEntity> questions;

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.dto.AnswerRequestDTO;
+import com.test.dto.ClassificationDTO;
 import com.test.dto.QuestionDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.ResultDTO;
@@ -19,11 +21,14 @@ import com.test.dto.TestSeriesTitlesDTO;
 import com.test.model.AnswerEntity;
 import com.test.model.CategoryEntity;
 import com.test.model.QuestionsEntity;
+import com.test.model.SubjectEntity;
 import com.test.model.TestAttemptEntity;
 import com.test.model.TestSeriesEntity;
+import com.test.model.TopicEntity;
 import com.test.repository.QuestionRepository;
 import com.test.repository.TestAttemptRepository;
 import com.test.repository.TestSeriesRepository;
+import com.test.service.IClassificationService;
 import com.test.service.IQuestionService;
 import com.test.service.ITestSeriesService;
 
@@ -34,6 +39,8 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 
 	@Autowired
 	private IQuestionService iQuestionService;
+	@Autowired
+	private IClassificationService classificationService;
 
 	@Autowired
 	private TestSeriesRepository testSeriesRepo;
@@ -55,6 +62,8 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 		System.out.println(list);
 		return list;
 	}
+	
+	
 
 	@Override
 	public List<TestSeriesDTO> getAllTestSeriesByCategory(String testCategory) {
@@ -84,31 +93,62 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 		return entity.stream().map(data -> modelMapper.map(data, TestSeriesDTO.class)).collect(Collectors.toList());
 
 	}
+	
+	/**
+	 * Get all Test series based on PlayList Id 
+	 */
+	@Override
+	public List<TestSeriesDTO> getAllTestSeriesByPlaylistId(Integer playListId) {
+		List<TestSeriesEntity> entity = testSeriesRepo.findByPlayListId(playListId);
+		entity.stream().forEach(data->{
+			List<QuestionOptionDTO> questionsInfo = getAllTestSeries(data.getTestSeriesId());
+			double totalMarks = questionsInfo.stream().mapToDouble(QuestionOptionDTO::getMarks).sum();
+			if(data.getTotalQuestion()!= questionsInfo.size()) {
+				data.setTotalQuestion(questionsInfo.size());
+				data.setTotalMarks(totalMarks);				
+				testSeriesRepo.save(data);
+			}
+		});
+		
+		return entity.stream().map(data -> modelMapper.map(data, TestSeriesDTO.class)).collect(Collectors.toList());
+
+	}
 
 	@Override
-	public List<CategoryEntity> getAllCategories() {
-		return testSeriesRepo.findAll().stream().map(TestSeriesEntity::getCategory) // extract category
-				.distinct() // remove duplicates
-				.collect(Collectors.toList());
+	public ClassificationDTO getAllClassification() {
+		List<CategoryEntity> categories= classificationService.getAllCategoryEntity();
+		List<SubjectEntity> subjects= classificationService.getAllSubjectEntity();
+		List<TopicEntity> topics= classificationService.getAllTopicEntity();
+		ClassificationDTO classfication = new ClassificationDTO();
+		classfication.setCategoryNames(categories.stream().map(CategoryEntity::getCategoryName).toList());
+		classfication.setSubjectNames(subjects.stream().map(SubjectEntity::getSubjectName).toList());
+		classfication.setTopicNames(topics.stream().map(TopicEntity::getTopicName).toList());
+		return classfication;
 	}
 
 	@Override
 	public String saveTestSeries(TestSeriesDTO dto) {
 		TestSeriesEntity entity = new TestSeriesEntity();
-		//entity.setCategory(dto.getCategory());
+		CategoryEntity categoryEntity = classificationService.getCategoryByName(dto.getCategory());
+		SubjectEntity subjectEntity = classificationService.getSubjectByName(dto.getSubject(), dto.getCategory());
+		TopicEntity topicEntity = classificationService.getTopicByTopicName(dto.getTopic(), dto.getSubject() ,dto.getCategory());
+		entity.setCategory(categoryEntity);
+		entity.setSubject(subjectEntity);
+		entity.setTopic(topicEntity);
 		entity.setCreateAt(LocalDate.now());
 		entity.setDescription(dto.getDescription());
 		entity.setDuration(dto.getDuration());
 		entity.setPrice(dto.getPrice());
 		entity.setTitle(dto.getTitle());
+		entity.setPlayListId(dto.getTestListId());
 		testSeriesRepo.save(entity);
 		return "saved";
 	}
 
 	@Override
-	public List<TestSeriesTitlesDTO> getAllTestSeriesId() {
+	public List<TestSeriesTitlesDTO> getAllTestSeriesId(Integer playListId) {
 		// TODO Auto-generated method stub
-		List<TestSeriesEntity> entities = testSeriesRepo.findAll();
+		List<TestSeriesEntity> entities = testSeriesRepo.findByPlayListId(playListId);
 		
 		return entities.stream().map(entity->new TestSeriesTitlesDTO(entity.getTestSeriesId(), entity.getTitle())).toList();
 	}

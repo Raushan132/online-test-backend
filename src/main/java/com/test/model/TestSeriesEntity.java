@@ -40,18 +40,21 @@ public class TestSeriesEntity {
 	private double price;
 	private LocalDate createAt;
 	
+	
+	private Integer playListId;
+	
 	  // ✅ EAGER fetching ensures we load them when TestSeries is loaded
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     @JsonIgnoreProperties({"subjects"}) // prevents infinite recursion
     private CategoryEntity category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", nullable = false)
     @JsonIgnoreProperties({"topics", "category"}) // avoid recursion again
     private SubjectEntity subject;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id", nullable = false)
     @JsonIgnoreProperties({"subject", "category"}) 
     private TopicEntity topic;
