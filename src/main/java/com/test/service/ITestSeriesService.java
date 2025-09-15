@@ -2,6 +2,7 @@ package com.test.service;
 
 import java.util.List;
 
+import com.test.dto.ClassificationDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
 import com.test.dto.TestSeriesTitlesDTO;
@@ -15,9 +16,10 @@ public interface ITestSeriesService {
 	List<TestSeriesDTO> getAllTestSeriesByCategory(String testCategory);
 
 	List<TestSeriesDTO> getAllTestSeries();
+	List<TestSeriesDTO> getAllTestSeriesByPlaylistId(Integer playListId);
 
-	List<CategoryEntity> getAllCategories();
-	List<TestSeriesTitlesDTO> getAllTestSeriesId();
+	ClassificationDTO getAllClassification();
+	List<TestSeriesTitlesDTO> getAllTestSeriesId(Integer playListId);
 	String saveTestSeries(TestSeriesDTO dto);
 	TestSeriesEntity getTestSeriesEntity(Integer TestSeriesId);
 

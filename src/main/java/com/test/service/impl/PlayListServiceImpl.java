@@ -2,12 +2,15 @@ package com.test.service.impl;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Random;
-import java.util.random.RandomGenerator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.test.dto.PlayListDTO;
 import com.test.model.AccessTokenEntity;
 import com.test.model.PlayListEntity;
 import com.test.model.UserEntity;
@@ -25,9 +28,11 @@ public class PlayListServiceImpl implements IPlayListService {
 	private   IAuthenticatedUserService authenticatedUserService;
 	@Autowired
 	private AccessTokenRepository accessTokenRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	
-	private static final String ALPHANUMERIC_CHARS =   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	private static final String ALPHANUMERIC_CHARS =   "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	 private final SecureRandom random = new SecureRandom(); 
 	 private static final int codeLength=6;
 
@@ -75,6 +80,29 @@ public class PlayListServiceImpl implements IPlayListService {
 	        }
 	        return sb.toString();
 	
+	}
+
+	@Override
+	public List<PlayListDTO> getPlaylistList() {
+		
+		UserEntity userEntity =authenticatedUserService.getCurrentUser();
+		List<PlayListEntity> playLists= playListRepository.findByUserUserId(userEntity.getUserId());
+		return playLists.stream().map(playlist-> {
+		    PlayListDTO dto = new PlayListDTO();
+			modelMapper.map(playlist,dto);
+			dto.setNoOfTestSeries(0);
+		   return dto;
+		}).toList();
+		
+	}
+
+	@Override
+	public Map<Integer, String> getPlaylistNamesWithId() {
+		// TODO Auto-generated method stub
+		UserEntity userEntity =authenticatedUserService.getCurrentUser();
+		List<PlayListEntity> playLists= playListRepository.findByUserUserId(userEntity.getUserId());
+		return playLists.stream().collect(Collectors.toMap(PlayListEntity::getTestListId, PlayListEntity::getTitle));
+		
 	}
 
 }

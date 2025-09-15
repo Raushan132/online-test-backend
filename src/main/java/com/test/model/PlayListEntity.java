@@ -1,5 +1,7 @@
 package com.test.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,4 +26,6 @@ public class PlayListEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+    
+   
 }
