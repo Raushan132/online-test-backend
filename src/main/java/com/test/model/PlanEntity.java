@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-class PlanEntity {
+public class PlanEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ class PlanEntity {
 	private String discountPeriod;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
-	
+	private Integer userId;
 	@OneToMany(mappedBy = "plan")
 	private List<SubscriberEntity> subscribers;
 	
