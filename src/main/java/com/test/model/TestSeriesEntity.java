@@ -60,7 +60,7 @@ public class TestSeriesEntity {
     private TopicEntity topic;
 	
 	@OneToMany(mappedBy = "testSeries",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<TestAttemptEntity> attempts;
+	private List<TestSeriesAttemptEntity> attempts;
 
 	
 	
