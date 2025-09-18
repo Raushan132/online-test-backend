@@ -18,15 +18,12 @@ import com.test.dto.QuestionOptionDTO;
 import com.test.dto.ResultDTO;
 import com.test.dto.TestSeriesDTO;
 import com.test.dto.TestSeriesTitlesDTO;
-import com.test.model.AnswerEntity;
 import com.test.model.CategoryEntity;
 import com.test.model.QuestionsEntity;
 import com.test.model.SubjectEntity;
-import com.test.model.TestAttemptEntity;
 import com.test.model.TestSeriesEntity;
 import com.test.model.TopicEntity;
 import com.test.repository.QuestionRepository;
-import com.test.repository.TestAttemptRepository;
 import com.test.repository.TestSeriesRepository;
 import com.test.service.IClassificationService;
 import com.test.service.IQuestionService;
@@ -45,8 +42,7 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	@Autowired
 	private TestSeriesRepository testSeriesRepo;
 
-	@Autowired
-	private TestAttemptRepository attemptRepository;
+
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -89,8 +85,8 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 				testSeriesRepo.save(data);
 			}
 		});
-		System.err.println(entity);
-		return entity.stream().map(data -> modelMapper.map(data, TestSeriesDTO.class)).collect(Collectors.toList());
+		
+		return entity.stream().filter(data->data.getTotalQuestion()!=0).map(data -> modelMapper.map(data, TestSeriesDTO.class)).collect(Collectors.toList());
 
 	}
 	

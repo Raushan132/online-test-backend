@@ -32,8 +32,7 @@ public class TestAttemptController {
 	    
 	    ResultDTO result = attemptService.result(testSeriesId, answerRqstDTO);
 
-	    System.err.println("Test Series ID: " + testSeriesId);
-	    System.err.println("Answers: " + answerRqstDTO);
+	  
 
 	    return ResponseEntity
 	            .status(HttpStatus.OK)   // explicitly setting status code 200

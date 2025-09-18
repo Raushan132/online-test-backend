@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.test.model.QuestionsEntity;
-import com.test.model.TestAttemptEntity;
+import com.test.model.TestSeriesAttemptEntity;
 
 import lombok.Data;
 
@@ -23,7 +23,7 @@ public class TestSeriesDTO {
 	private double price;
 	private Integer testListId;
 	private LocalDate createAt;
-	private List<TestAttemptEntity> attempts;
+	private List<TestSeriesAttemptEntity> attempts;
 	private List<QuestionsEntity> questions;
 
 }

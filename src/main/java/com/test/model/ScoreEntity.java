@@ -25,7 +25,7 @@ public class ScoreEntity {
 	private Integer scoreId;
 	private LocalDate submissionTime;
 	private double score;
-	private Integer rank;
+	private Integer testRank;
 	private Integer outOfRank;
 	private LocalDate timeTaken;
 	private Integer selectedAnswer;
