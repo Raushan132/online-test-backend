@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.config.JwtUtil;
+import com.test.dto.AuthDTO;
 import com.test.dto.HttpResponseDTO;
 import com.test.model.UserEntity;
+import com.test.service.IAuthenticatedUserService;
 import com.test.service.IUserService;
 
 @RestController
@@ -26,13 +28,14 @@ public class AuthController {
 
 	private final AuthenticationManager authenticationManager;
 	private final JwtUtil jwtUtil;
+	private final IUserService userService;
+	
+	
 
-	@Autowired
-	private IUserService userService;
-
-	public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+	public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil,IUserService userService) {
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
+		this.userService = userService;
 	}
 
 	@GetMapping("/verify")
@@ -41,6 +44,7 @@ public class AuthController {
 		boolean status = userService.userVerification(token, id);
 
 		if (status) {
+			
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Account verified successfully!");
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token or user ID");
@@ -48,7 +52,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestBody UserEntity request) {
+	public ResponseEntity<HttpResponseDTO<AuthDTO>> login(@RequestBody UserEntity request) {
 		try {
 
 			authenticationManager
@@ -56,7 +60,11 @@ public class AuthController {
 		} catch (AuthenticationException e) {
 			throw new RuntimeException("Invalid Credentials");
 		}
-		return jwtUtil.generateToken(request.getEmail());
+		
+		AuthDTO authDTO = userService.getUserInfo(request.getEmail());
+		authDTO.setToken(jwtUtil.generateToken(request.getEmail()));
+		
+		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK,"Successfuly login",authDTO));
 	}
 
 	@PostMapping("/register")

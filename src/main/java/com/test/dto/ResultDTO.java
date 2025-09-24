@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ResultDTO {
 
-    private Integer score;           
+    private Double score;           
     private Integer total;          
     private Integer rank;
     private Double percentile;      

@@ -23,7 +23,7 @@ public class TestSeriesDTO {
 	private double price;
 	private Integer testListId;
 	private LocalDate createAt;
-	private List<TestSeriesAttemptEntity> attempts;
-	private List<QuestionsEntity> questions;
+	private List<AttemptDTO> attempts;
+	private List<QuestionOptionDTO> questions;
 
 }

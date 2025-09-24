@@ -1,11 +1,17 @@
 package com.test.service.impl;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.test.dto.AuthDTO;
+import com.test.model.Role;
 import com.test.model.UserEntity;
 import com.test.service.IAuthenticatedUserService;
 import com.test.service.IUserService;
@@ -32,5 +38,6 @@ public class AuthenticatedUserServiceImpl implements IAuthenticatedUserService {
 
 	        throw new IllegalStateException("Principal is not of type UserEntity");
 	    }
+	
 
 }

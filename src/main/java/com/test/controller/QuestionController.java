@@ -42,12 +42,5 @@ public class QuestionController {
 				.ok(  HttpResponseDTO.of(HttpStatus.ACCEPTED, "All Questions saved successfully", questionDTOs));
 	}
 
-	@GetMapping("/find-all/{testSeriesId}")
-	public ResponseEntity<HttpResponseDTO<List<QuestionOptionDTO>>> getAllQuestionEntityById(
-			@PathVariable("testSeriesId") Integer testSeriesId) {
-		List<QuestionOptionDTO> dto = questionService.getAllQuestionDTOById(testSeriesId);
-		HttpResponseDTO<List<QuestionOptionDTO>> response =   HttpResponseDTO.of(HttpStatus.ACCEPTED, "All Questions fetched successfully", dto);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
-	}
 
 }

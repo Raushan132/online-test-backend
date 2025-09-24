@@ -12,7 +12,9 @@ import com.test.dto.QuestionOptionDTO;
 import com.test.model.QuestionsEntity;
 import com.test.model.TestSeriesEntity;
 import com.test.repository.QuestionRepository;
+import com.test.repository.TestSeriesAttemptRepository;
 import com.test.service.IQuestionService;
+import com.test.service.ITestAttemptService;
 
 @Service
 public class QuestionServiceImpl implements IQuestionService {
@@ -22,6 +24,10 @@ public class QuestionServiceImpl implements IQuestionService {
 
 	@Autowired
 	private QuestionRepository questionRepo;
+	
+	
+ 
+
 
 	@Override
 	public String saveQuestion(List<QuestionDTO> questionDTOs,TestSeriesEntity testSeriesEntity) {

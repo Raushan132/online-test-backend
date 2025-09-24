@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.dto.AnswerRequestDTO;
+import com.test.dto.AttemptDTO;
 import com.test.dto.ClassificationDTO;
 import com.test.dto.QuestionDTO;
 import com.test.dto.QuestionOptionDTO;
@@ -27,17 +28,19 @@ import com.test.repository.QuestionRepository;
 import com.test.repository.TestSeriesRepository;
 import com.test.service.IClassificationService;
 import com.test.service.IQuestionService;
+import com.test.service.ITestAttemptService;
 import com.test.service.ITestSeriesService;
 
 @Service
 public class TestSeriesServiceImpl implements ITestSeriesService {
 
-	private final QuestionRepository questionRepository;
-
+	
 	@Autowired
 	private IQuestionService iQuestionService;
 	@Autowired
 	private IClassificationService classificationService;
+	@Autowired
+	private ITestAttemptService attemptService;
 
 	@Autowired
 	private TestSeriesRepository testSeriesRepo;
@@ -47,17 +50,7 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	TestSeriesServiceImpl(QuestionRepository questionRepository) {
-		this.questionRepository = questionRepository;
-	}
-
-	@Override
-	public List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId) {
-		List<QuestionOptionDTO> list = iQuestionService.getAllQuestionDTOById(testSeriesId);
-		System.out.print("----------Test Service Executed-----------");
-		System.out.println(list);
-		return list;
-	}
+	
 	
 	
 
@@ -153,6 +146,30 @@ public class TestSeriesServiceImpl implements ITestSeriesService {
 	public TestSeriesEntity getTestSeriesEntity(Integer TestSeriesId) {
 		// TODO Auto-generated method stub
 		return testSeriesRepo.findById(TestSeriesId).get();
+	}
+
+
+
+
+	@Override
+	public List<QuestionOptionDTO> getAllTestSeries(Integer testSeriesId) {
+		// TODO Auto-generated method stub
+		
+		
+		return iQuestionService.getAllQuestionDTOById(testSeriesId);
+	}
+
+	@Override
+	public AttemptDTO getTestAttempt(Integer testSeriesId, Integer attemptId) {
+		// TODO Auto-generated method stub
+		 TestSeriesEntity testSeries = getTestSeriesEntity(testSeriesId);
+		 attemptId= attemptService.getTestAttemptId(testSeries, attemptId);
+		 List<QuestionOptionDTO> questionOptions= iQuestionService.getAllQuestionDTOById(testSeriesId);
+		 AttemptDTO attemptDTO = new AttemptDTO();
+		 attemptDTO.setAttemptId(attemptId);
+		 attemptDTO.setQuestionOptions(questionOptions);
+		
+		return attemptDTO;
 	}
 	
 	
