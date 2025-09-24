@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,19 +29,21 @@ public class ScoreEntity {
 	private Integer testRank;
 	private Integer outOfRank;
 	private LocalDate timeTaken;
-	private Integer selectedAnswer;
+	private String selectedAnswer;
 	private Integer noOfCorrect;
 	private Integer noofIncorret;
 	private Integer noOfUnattempt;
+	private double accuracy;
+	private double percentile;
 	
 	
 	 /**
      * Many scores belong to a single test attempt.
      * Foreign Key: attempt_id (from 'test_series_attempt' table)
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "attempt_id", nullable = false)
-    private TestSeriesAttemptEntity testSeriesAttempt;
+	  @OneToOne(fetch = FetchType.LAZY)
+	    @JoinColumn(name = "attempt_id", nullable = false)
+	    private TestSeriesAttemptEntity testSeriesAttempt;
 
     
     

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.dto.AttemptDTO;
 import com.test.dto.ClassificationDTO;
 import com.test.dto.HttpResponseDTO;
 import com.test.dto.QuestionOptionDTO;
@@ -76,6 +77,12 @@ public class TestSeriesController {
 		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK, "All categories saved successfully", null));
 	}
 	
+	@GetMapping("/find-all/{testSeriesId}/{attemptId}")
+	public ResponseEntity<HttpResponseDTO<AttemptDTO>> getAllQuestionEntityById(
+			@PathVariable("testSeriesId") Integer testSeriesId, @PathVariable Integer attemptId) {
+		AttemptDTO dto = iTestSeriesService.getTestAttempt(testSeriesId, attemptId);
+		return ResponseEntity.ok(new HttpResponseDTO<>(HttpStatus.OK,"Fetched All Question and Options",dto));
+	}
 	
 
 }

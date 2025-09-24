@@ -25,12 +25,12 @@ public class TestAttemptController {
 	private ITestAttemptService attemptService;
 	
 	
-	@PostMapping("/result/{test-series-id}")
+	@PostMapping("/result/{test-series-id}/{attemptId}")
 	public ResponseEntity<ResultDTO> result(
-	        @PathVariable("test-series-id") Integer testSeriesId,
+	        @PathVariable("test-series-id") Integer testSeriesId,@PathVariable Integer attemptId,
 	        @RequestBody List<AnswerRequestDTO> answerRqstDTO) {
 	    
-	    ResultDTO result = attemptService.result(testSeriesId, answerRqstDTO);
+	    ResultDTO result = attemptService.result(testSeriesId,attemptId, answerRqstDTO);
 
 	  
 

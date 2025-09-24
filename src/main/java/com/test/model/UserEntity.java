@@ -41,6 +41,7 @@ public class UserEntity implements UserDetails {
 	private String email;
 	private String password;
 	private LocalDate registeredAt;
+	private boolean isVerified;
 	private boolean isActive;
 	private boolean isInstitute;
 	

@@ -2,6 +2,7 @@ package com.test.service;
 
 import java.util.List;
 
+import com.test.dto.AttemptDTO;
 import com.test.dto.ClassificationDTO;
 import com.test.dto.QuestionOptionDTO;
 import com.test.dto.TestSeriesDTO;
@@ -22,6 +23,18 @@ public interface ITestSeriesService {
 	List<TestSeriesTitlesDTO> getAllTestSeriesId(Integer playListId);
 	String saveTestSeries(TestSeriesDTO dto);
 	TestSeriesEntity getTestSeriesEntity(Integer TestSeriesId);
+	
+	/**
+	 * <p>
+	 * 	When User Get Test Started then
+	 *  get the new AttemptId if attempt Id not exits and <br/>
+	 *  get all the question, options and marks belongs to the testSeries
+	 * </p>
+	 * @param testSeriesId
+	 * @param attemptId
+	 * @return
+	 */
+	AttemptDTO getTestAttempt(Integer testSeriesId,Integer attemptId);
 
 
 }

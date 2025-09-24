@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,8 +33,8 @@ public class TestSeriesAttemptEntity {
 	/**
      * One attempt can have multiple scores (e.g., section-wise scoring).
      */
-    @OneToMany(mappedBy = "testSeriesAttempt", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ScoreEntity> scores;
+	 @OneToOne(mappedBy = "testSeriesAttempt", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	    private ScoreEntity score;
 
     /**
      * (Optional, based on ERD)
